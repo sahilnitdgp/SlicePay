@@ -1,8 +1,14 @@
 package com.example.sahil.slicepay;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -21,14 +27,26 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
 
     private ViewPager mViewPager;
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (!checkPermission()) {
+
+            requestPermission();
+
+        }
+        else {
+
+            //Toast.makeText(this, "Already Granted", Toast.LENGTH_SHORT).show();
+        }
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -46,6 +64,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void requestPermission(){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,Manifest.permission.READ_CONTACTS)){
+
+
+        } else {
+
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_CONTACTS},MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+        }
+    }
+
+    private boolean checkPermission(){
+        int result = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_CONTACTS);
+        if (result == PackageManager.PERMISSION_GRANTED){
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 

@@ -51,20 +51,15 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
+       ImageView imageView;
 
-        if(convertView==null) {
 
              imageView = new ImageView(mContext);
 
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setLayoutParams(new GridView.LayoutParams(270, 200));
-            imageView.setPadding(3, 3, 3, 3);
-        }else
-        {
-            imageView = (ImageView) convertView;
-        }
-        imageView.setImageResource(mThumbIds[position]);
+            imageView.setLayoutParams(new GridView.LayoutParams(450 ,400));
+           // imageView.setPadding(3, 3, 3, 3);
+             imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
 
